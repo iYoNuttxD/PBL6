@@ -1,5 +1,3 @@
-package PBL6;
-
 import java.util.ArrayList;
 
 public class Produto {
