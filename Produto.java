@@ -4,39 +4,23 @@ import java.util.ArrayList;
 
 public class Produto {
     protected int cod_Produto;
+    protected String tipoP;
     protected String marca;
     protected String modelo;
     protected String descricao;
     protected float preco;
-    private static ArrayList<Produto> produtos = new ArrayList<Produto>();
 
-    public Produto(String marca, String modelo, String descricao, float preco, int cod_Produto) {
+    public Produto(String marca, String tipoP, String modelo, String descricao, float preco, int cod_Produto) {
         this.marca = marca;
+        this.tipoP = tipoP;
         this.modelo = modelo;
         this.descricao = descricao;
         this.preco = preco;
         this.cod_Produto = cod_Produto;
     }
 
-    public static boolean verificarLista(){
-        if (produtos.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static void adicionarEstoqueProduto(Produto produto){
-        produtos.add(produto);
-    }
-
-    public static boolean verificarCod_Produto(int Cod_Produto) {
-        for (Produto produto : produtos) {
-            if (produto.getCod_Produto() == Cod_Produto) {
-                return true; // O código de produto já está cadastrado
-            }
-        }
-        return false; // O código de produto não está cadastrado
+    public void adicionarEstoque(ArrayList<Produto> listaProdutos){
+        listaProdutos.add(this);
     }
 
     @Override

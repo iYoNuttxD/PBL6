@@ -1,7 +1,5 @@
 package PBL6;
 
-import java.util.ArrayList;
-
 public class CPU extends Produto {
     private String tipo;
     private int velocidade;
@@ -11,12 +9,11 @@ public class CPU extends Produto {
     private int nucleos;
     private float frequencia;
     private String soquete;
-    private static ArrayList<CPU> cpus = new ArrayList<CPU>();
 
     public CPU(String tipo, int velocidade, int threads, int tdp, String gpus, int nucleos,
-               float frequencia,String soquete, String descricao, float preco, String marca, String modelo,
+               float frequencia,String soquete, String descricao, float preco, String tipoP, String marca, String modelo,
                int cod_Produto){
-        super(marca, modelo, descricao, preco, cod_Produto);
+        super(marca, tipoP, modelo, descricao, preco, cod_Produto);
         this.tipo = tipo;
         this.velocidade = velocidade;
         this.threads = threads;
@@ -25,38 +22,6 @@ public class CPU extends Produto {
         this.nucleos = nucleos;
         this.frequencia = frequencia;
         this.soquete = soquete;
-    }
-
-    public static void visualizarEstoqueCPU() {
-        int i = 1;
-        for (CPU cpuItem : cpus) {
-            System.out.println(i + "// " +  cpuItem);
-            i++;
-        }
-    }
-
-    public static boolean verificarCod_ProdutoCPU(int Cod_Produto) {
-        for (CPU cpu : cpus) {
-            if (cpu.getCod_Produto() == Cod_Produto) {
-                System.out.println(cpu);
-                return true; // O código de produto já está cadastrado
-            }
-        }
-        return false; // O código de produto não está cadastrado
-    }
-
-    public void adicionarEstoqueCPU(CPU cpu){
-        cpus.add(cpu);
-    }
-
-    public static void removerCPU(int cod_Produto) {
-        for (int i = 0; i < cpus.size(); i++) {
-            CPU cpu = cpus.get(i);
-            if (cpu.getCod_Produto() == cod_Produto) {
-                cpus.remove(i); // Remove a CPU da lista
-                break;
-            }
-        }
     }
 
     @Override

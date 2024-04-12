@@ -1,7 +1,5 @@
 package PBL6;
 
-import java.util.ArrayList;
-
 public class Placa_Mae extends Produto{
     private String tipo;
     private int velocidade;
@@ -11,14 +9,13 @@ public class Placa_Mae extends Produto{
     private String tamanho;
     private String soquete;
     private String chipSet;
-    private static ArrayList<Placa_Mae> placaMaes = new ArrayList<Placa_Mae>();
 
 
 
     public Placa_Mae(String tipo, int velocidade, String pcie, int m2, int sata,
                      String tamanho, String soquete, String chipSet, String descricao, float preco, String marca,
-                     String modelo, int cod_Produto) {
-        super(marca, modelo, descricao, preco, cod_Produto);
+                     String modelo, int cod_Produto, String tipoP) {
+        super(marca, tipoP, modelo, descricao, preco, cod_Produto);
         this.tipo = tipo;
         this.velocidade = velocidade;
         this.pcie = pcie;
@@ -28,38 +25,6 @@ public class Placa_Mae extends Produto{
         this.soquete = soquete;
         this.chipSet = chipSet;
 
-    }
-
-    public static void visualizarEstoquePlacaMae() {
-        int i = 1;
-        for (Placa_Mae pmItem : placaMaes) {
-            System.out.println(i + "// " +  pmItem);
-            i++;
-        }
-    }
-
-    public static boolean verificarCod_ProdutoPM(int Cod_Produto) {
-        for (Placa_Mae placaMae : placaMaes) {
-            if (placaMae.getCod_Produto() == Cod_Produto) {
-                System.out.println(placaMae);
-                return true; // O código de produto já está cadastrado
-            }
-        }
-        return false; // O código de produto não está cadastrado
-    }
-
-    public void adicionarEstoquePM(Placa_Mae placaMae){
-        placaMaes.add(placaMae);
-    }
-
-    public static void removerPM(int cod_Produto) {
-        for (int i = 0; i < placaMaes.size(); i++) {
-            Placa_Mae placaMae = placaMaes.get(i);
-            if (placaMae.getCod_Produto() == cod_Produto) {
-                placaMaes.remove(i); // Remove a CPU da lista
-                break;
-            }
-        }
     }
 
     @Override

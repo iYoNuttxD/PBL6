@@ -1,12 +1,12 @@
 package PBL6;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String [] args){
         System.out.println("Equipe: Daniel Ganz Musse, João Vitor de Souza Hernandes, " +
                 "Pedro Henrique Silva Cabral, Fabio Augusto Gortz");
-
         while (true) {
             try {
                 Scanner scanner = new Scanner(System.in);
@@ -50,7 +50,7 @@ public class Main {
                 if (opcao == 1) {
                     System.out.println("Digite o código do produto: ");
                     int cod_Produto = Integer.parseInt(scanner.nextLine());
-                    if (!Produto.verificarCod_Produto(cod_Produto)) {
+                    if (verificarCod_Produto(cod_Produto, listaProdutos)) {
                         System.out.println("Digite a marca: ");
                         String marca = scanner.nextLine();
                         System.out.println("Digite o modelo: ");
@@ -76,20 +76,18 @@ public class Main {
                         System.out.println("Digite as GPUs: ");
                         String gpus = scanner.nextLine();
                         System.out.println("CPU cadastrada com sucesso!");
+                        String tipoP = "CPU";
 
-                        Produto produto = new Produto(marca, modelo, descricao, preco, cod_Produto);
-                        Produto.adicionarEstoqueProduto(produto);
-
-                        CPU cpu = new CPU(tipo, velocidade, threads, tdp, gpus, nucleos,
-                                frequencia, soquete, descricao, preco, marca, modelo, cod_Produto);
-                        cpu.adicionarEstoqueCPU(cpu);
+                        Produto cpu = new CPU(tipo, velocidade, threads, tdp, gpus, nucleos,
+                                frequencia, soquete, descricao, preco, marca, modelo, tipoP, cod_Produto);
+                        cpu.adicionarEstoque(listaProdutos);
                     } else {
                         System.out.println("Produto já cadastrado!!!");
                     }
                 } else if (opcao == 2) {
                     System.out.println("Digite o código do produto: ");
                     int cod_Produto = Integer.parseInt(scanner.nextLine());
-                    if (!Produto.verificarCod_Produto(cod_Produto)) {
+                    if (verificarCod_Produto(cod_Produto, listaProdutos)) {
                         System.out.println("Digite a marca: ");
                         String marca = scanner.nextLine();
                         System.out.println("Digite o modelo: ");
@@ -117,20 +115,18 @@ public class Main {
                         System.out.println("Digite o conector: ");
                         String conector = scanner.nextLine();
                         System.out.println("GPU cadastrada com sucesso!");
+                        String tipoP = "GPU";
 
-                        Produto produto = new Produto(marca, modelo, descricao, preco, cod_Produto);
-                        Produto.adicionarEstoqueProduto(produto);
-
-                        GPU gpu = new GPU(marca, modelo, descricao, preco, pcie, nucleos, capacidade, velocidade, tipo,
-                                tdp, slot, tamanho, conector, cod_Produto);
-                        gpu.adicionarEstoqueGPU(gpu);
+                        Produto gpu = new GPU(marca, modelo, descricao, preco, pcie, nucleos, capacidade, velocidade, tipo,
+                                tdp, slot, tamanho, conector, cod_Produto, tipoP);
+                        gpu.adicionarEstoque(listaProdutos);
                     } else {
                         System.out.println("Produto já cadastrado!!!");
                     }
                 } else if (opcao == 3) {
                     System.out.println("Digite o código do produto: ");
                     int cod_Produto = Integer.parseInt(scanner.nextLine());
-                    if (!Produto.verificarCod_Produto(cod_Produto)) {
+                    if (verificarCod_Produto(cod_Produto, listaProdutos)) {
                         System.out.println("Digite a marca: ");
                         String marca = scanner.nextLine();
                         System.out.println("Digite o modelo: ");
@@ -156,20 +152,18 @@ public class Main {
                         System.out.println("Digite o tamanho: ");
                         String tamanho = scanner.nextLine();
                         System.out.println("Placa mãe cadastrada com sucesso!");
+                        String tipoP = "Placa_Mae";
 
-                        Produto produto = new Produto(marca, modelo, descricao, preco, cod_Produto);
-                        Produto.adicionarEstoqueProduto(produto);
-
-                        Placa_Mae placaMae = new Placa_Mae(tipo, velocidade, pcie, m2, sata, tamanho, soquete, chipset,
-                                descricao, preco, marca, modelo, cod_Produto);
-                        placaMae.adicionarEstoquePM(placaMae);
+                        Produto placaMae = new Placa_Mae(tipo, velocidade, pcie, m2, sata, tamanho, soquete, chipset,
+                                descricao, preco, marca, modelo, cod_Produto, tipoP);
+                        placaMae.adicionarEstoque(listaProdutos);
                     } else {
                         System.out.println("Produto já cadastrado!!!");
                     }
                 } else if (opcao == 4) {
                     System.out.println("Digite o código do produto: ");
                     int cod_Produto = Integer.parseInt(scanner.nextLine());
-                    if (!Produto.verificarCod_Produto(cod_Produto)) {
+                    if (verificarCod_Produto(cod_Produto, listaProdutos)) {
                         System.out.println("Digite a marca: ");
                         String marca = scanner.nextLine();
                         System.out.println("Digite o modelo: ");
@@ -185,12 +179,11 @@ public class Main {
                         System.out.println("Digite a capacidade da memória: ");
                         int capacidade = Integer.parseInt(scanner.nextLine());
                         System.out.println("Memória RAM cadastrada com sucesso!");
+                        String tipoP = "RAM";
 
-                        Produto produto = new Produto(marca, modelo, descricao, preco, cod_Produto);
-                        Produto.adicionarEstoqueProduto(produto);
-
-                        RAM ram = new RAM(preco, capacidade, tipo, marca, modelo, descricao, velocidade, cod_Produto);
-                        ram.adicionarEstoqueRAM(ram);
+                        Produto ram = new RAM(preco, capacidade, tipo, marca, modelo, descricao, velocidade,
+                                cod_Produto, tipoP);
+                        ram.adicionarEstoque(listaProdutos);
                     } else {
                         System.out.println("Produto já cadastrado!!!");
                     }
@@ -207,61 +200,18 @@ public class Main {
 
     public static void removerProduto(){
         try {
-            while (true){
-                if (!Produto.verificarLista()) {
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.println("---------- Descadastrar Produto ----------");
-                    System.out.println("O que você deseja fazer?");
-                    System.out.println("1. Descadastrar Produto");
-                    System.out.println("0. Sair");
-                    int opcao = Integer.parseInt(scanner.nextLine());
-                    if (opcao == 1){
-                        System.out.println("Informe o código do produto que deseja remover: ");
-                        int cod_Produto = Integer.parseInt(scanner.nextLine());
-                        if (Produto.verificarCod_Produto(cod_Produto)){
-                            if(CPU.verificarCod_ProdutoCPU(cod_Produto)){
-                                System.out.println("Digite 1 para confirmar a exclusão: ");
-                                int opcao1 = Integer.parseInt(scanner.nextLine());
-                                if (opcao1 == 1){
-                                    CPU.removerCPU(cod_Produto);
-                                    System.out.println("CPU removida com sucesso!");
-                                }
-                            } else if (GPU.verificarCod_ProdutoGPU(cod_Produto)){
-                                System.out.println("Digite 1 para confirmar a exclusão: ");
-                                int opcao1 = Integer.parseInt(scanner.nextLine());
-                                if (opcao1 == 1){
-                                    GPU.removerGPU(cod_Produto);
-                                    System.out.println("GPU removida com sucesso!");
-                                }
-                            } else if (Placa_Mae.verificarCod_ProdutoPM(cod_Produto)){
-                                System.out.println("Digite 1 para confirmar a exclusão: ");
-                                int opcao1 = Integer.parseInt(scanner.nextLine());
-                                if (opcao1 == 1){
-                                    Placa_Mae.removerPM(cod_Produto);
-                                    System.out.println("Placa mãe removida com sucesso!");
-                                }
-                            } else {
-                                System.out.println("Digite 1 para confirmar a exclusão: ");
-                                int opcao1 = Integer.parseInt(scanner.nextLine());
-                                if (opcao1 == 1){
-                                    RAM.removerRAM(cod_Produto);
-                                    System.out.println("Memória RAM removida com sucesso!");
-                                }
-                            }
-                        } else {
-                            System.out.println("Produto não encontrado.");
-                        }
-                    } else if (opcao == 0) {
-                        break;
-                    } else {
-                        System.out.println("Opção inválida!!!");
-                    }
+            if (verificarLista()) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Informe o código do produto que deseja remover: ");
+                int cod_Produto = Integer.parseInt(scanner.nextLine());
+                if (!verificarCod_Produto(cod_Produto, listaProdutos)){
+                    descadastrarProduto(cod_Produto, listaProdutos);
                 } else {
-                    System.out.println("Nenhum produto está cadastrado!");
-                    break;
+                    System.out.println("Produto não encontrado.");
                 }
+            } else {
+                System.out.println("Nenhum produto está cadastrado!");
             }
-
         } catch (Exception e) {
             System.out.println("Ocorreu um erro: " + e.getMessage());
         }
@@ -270,7 +220,7 @@ public class Main {
     public static void visualizarEstoque() {
         while (true){
             try {
-                if(!Produto.verificarLista()){
+                if(verificarLista()){
                     Scanner scanner = new Scanner(System.in);
                     System.out.println("---------- Visualizar Estoque ----------");
                     System.out.println("Qual estoque deseja visualizar?");
@@ -281,13 +231,13 @@ public class Main {
                     System.out.println("0. Sair");
                     int opcao = scanner.nextInt();
                     if (opcao == 1) {
-                        CPU.visualizarEstoqueCPU();
+                        visualizarEstoqueCPU();
                     } else if (opcao == 2){
-                        GPU.visualizarEstoqueGPU();
+                        visualizarEstoqueGPU();
                     } else if (opcao == 3) {
-                        Placa_Mae.visualizarEstoquePlacaMae();
+                        visualizarEstoquePlacaMae();
                     } else if (opcao == 4){
-                        RAM.visualizarEstoqueRAM();
+                        visualizarEstoqueRAM();
                     } else if (opcao == 0){
                         break;
                     } else {
@@ -302,5 +252,70 @@ public class Main {
                 System.out.println("Ocorreu um erro: " + e.getMessage());
             }
         }
+    }
+
+    static ArrayList<Produto> listaProdutos = new ArrayList<>();
+
+    public static void visualizarEstoqueCPU() {
+        int i = 1;
+        for (Produto produto : listaProdutos) {
+            if (produto instanceof CPU) {
+                System.out.println(i + "/ " +  produto);
+                i++;
+            }
+        }
+    }
+
+    public static void visualizarEstoqueGPU() {
+        int i = 1;
+        for (Produto produto : listaProdutos) {
+            if (produto instanceof GPU) {
+                System.out.println(i + "/ " +  produto);
+                i++;
+            }
+        }
+    }
+
+    public static void visualizarEstoquePlacaMae() {
+        int i = 1;
+        for (Produto produto : listaProdutos) {
+            if (produto instanceof Placa_Mae) {
+                System.out.println(i + "/ " +  produto);
+                i++;
+            }
+        }
+    }
+
+    public static void visualizarEstoqueRAM() {
+        int i = 1;
+        for (Produto produto : listaProdutos) {
+            if (produto instanceof RAM) {
+                System.out.println(i + "/ " +  produto);
+                i++;
+            }
+        }
+    }
+
+    public static boolean verificarLista(){
+        return !listaProdutos.isEmpty();
+    }
+
+    public static void descadastrarProduto(int cod_Produto, ArrayList<Produto> listaProdutos) {
+        for (int i = 0; i < listaProdutos.size(); i++) {
+            if (listaProdutos.get(i).getCod_Produto() == cod_Produto) {
+                listaProdutos.remove(i);
+                System.out.println("Produto com código " + cod_Produto + " descadastrado.");
+                break;
+            }
+        }
+    }
+
+    public static boolean verificarCod_Produto(int cod_Produto, ArrayList<Produto> listaProdutos) {
+        for (Produto produto : listaProdutos) {
+            if (produto.getCod_Produto() == cod_Produto) {
+                return false; // O código de produto já está cadastrado
+            }
+        }
+        return true; // O código de produto não está cadastrado
     }
 }
