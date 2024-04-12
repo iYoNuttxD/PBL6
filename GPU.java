@@ -1,5 +1,3 @@
-package PBL6;
-
 public class GPU extends Produto {
     private String pcie;
     private int nucleos;
