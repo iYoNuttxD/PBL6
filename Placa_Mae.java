@@ -1,5 +1,3 @@
-package PBL6;
-
 public class Placa_Mae extends Produto{
     private String tipo;
     private int velocidade;
