@@ -1,6 +1,3 @@
-package PBL6;
-
-
 public class RAM extends Produto {
     private int capacidade;
     private String tipo;
